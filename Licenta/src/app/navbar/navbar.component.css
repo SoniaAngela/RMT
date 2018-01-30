@@ -1,0 +1,21 @@
+
+.nav-link{
+    color:#fff;
+}
+
+a:not([href]):not([tabindex]){
+    color:#fff;
+}
+ a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):active{
+color:#fff;
+background: #333;
+}
+a{
+    font-style: none;
+    color: #fff;
+
+}
+a:activ, a:hover, a:focus{
+    color:#fff;
+    font-style: none;
+}

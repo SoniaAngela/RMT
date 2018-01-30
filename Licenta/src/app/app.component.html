@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+
+
+<!-- <dx-text-area
+[height]="90"
+[maxLength]="maxLength"
+[(value)]="textAreavalue">
+</dx-text-area>
+<dx-button [text]="applyButtonOptions.text" [type]="applyButtonOptions.type" (onClick)="applyButtonOptions.onClick(textAreavalue)"></dx-button>
+
+<div class="widget-container">
+  <dx-list
+      [items]="tasks"
+      [allowItemDeleting]="allowDeleting"
+      [itemDeleteMode]="deleteType"
+      [showSelectionControls]="true"
+      selectionMode="single"
+      [(selectedItems)]="selectedItems"
+    (onItemClick)="applyButtonOptions.onClick(selectedItems)">
+  </dx-list>
+  <div class="selected-data">
+      <span class="caption">Selected Tasks:</span>
+      <span>{{selectedItems}}</span>
+  </div>
+
+  <div class="form">
+    <dx-tree-view
+        id="simple-treeview"
+        [items]="products"
+        [width]="300"
+        selectionMode="single"
+        selectByClick=true
+        (onItemClick)="selectItem($event)"
+    ></dx-tree-view>
+  
+</div>
+</div>   
+<h1>Our MongoDB is Working!</h1>
+
+<ul>
+  <li *ngFor="let user of users">{{ user.name }}</li>
+</ul> -->
+
+  <router-outlet></router-outlet>
