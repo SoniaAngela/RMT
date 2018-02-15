@@ -1,3 +1,10 @@
-<p>
-  circularity works!
-</p>
+<div class="container">
+  <input [(ngModel)]="circParam" type="text" />
+  <button (click)="getCircularitySection(circParam)" class="btn btn-primary pull-right">Run</button>
+  <ul>
+    <li *ngFor="let node of nodes"> 
+      {{node}}
+    </li>
+   </ul>
+</div>
+

@@ -24,68 +24,78 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class DataService {
-  headerGet: any;
-  headerPost: any;
-  headerDelete: any;
-  sessionId: any;
+    headerGet: any;
+    headerPost: any;
+    headerDelete: any;
+    sessionId: any;
 
 
- 
 
 
-//   getContent(){
-//     return content;
-// }
-// getTasks() : string[] {
-//     return tasks;
-// }
-// getLoops(): Loop[] {
-//     return Loops;
-// }
-  constructor(private http: Http) {
-    this.headerGet = { headers: new Headers({ 'Content-Type': 'application/json' }) };
-    this.headerPost = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }) };
-    this.headerDelete = { headers: new Headers({}) };
-    this.sessionId = sessionStorage.getItem('user_token') ? JSON.parse(sessionStorage.getItem('user_token')).sessionId : null;
-}
 
-  // getUsers() {
-  //   return this._http.get("/home")
-  //     .map(result => this.result = result.json().data);
-  // }
-
-  // getLoop() {
-  //   return this.http.get("/api/loop")
-  //     .map(result => this.result = result.json().data);
-    
-  // }
-
-   getLoop(loopParam) {
-     const params = new URLSearchParams();
-    // params.set('sessionId', this.sessionId);
-    params.set('loopParam', loopParam)
-    return this.http.post('api/loop', params, this.headerPost)
-        .map((response: Response) => this.handleSuccess(response))
-        .catch((error: Response) => this.handleError(error));
-  }
-
-  handleSuccess(response) {
-    let result: any;
-    try {
-        result = response.json();
-    } catch (e) {
-        throw new Error('The server response is unsuported');
+    //   getContent(){
+    //     return content;
+    // }
+    // getTasks() : string[] {
+    //     return tasks;
+    // }
+    // getLoops(): Loop[] {
+    //     return Loops;
+    // }
+    constructor(private http: Http) {
+        this.headerGet = { headers: new Headers({ 'Content-Type': 'application/json' }) };
+        this.headerPost = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }) };
+        this.headerDelete = { headers: new Headers({}) };
+        this.sessionId = sessionStorage.getItem('user_token') ? JSON.parse(sessionStorage.getItem('user_token')).sessionId : null;
     }
-    return result;
-}
-handleError(error) {
-    let result: any;
-    try {
-        result = error.json();
-    } catch (e) {
-        throw new Error('The server response is unsuported');
+
+    // getUsers() {
+    //   return this._http.get("/home")
+    //     .map(result => this.result = result.json().data);
+    // }
+
+    // getLoop() {
+    //   return this.http.get("/api/loop")
+    //     .map(result => this.result = result.json().data);
+
+    // }
+
+    getLoop(loopParam) {
+        const params = new URLSearchParams();
+        // params.set('sessionId', this.sessionId);
+        params.set('loopParam', loopParam)
+        return this.http.post('api/loop', params, this.headerPost)
+            .map((response: Response) => this.handleSuccess(response))
+            .catch((error: Response) => this.handleError(error));
     }
-    return Observable.throw(error);
-}
+
+    getCitcularity(circParam) {
+        const params = new URLSearchParams();
+        // params.set('sessionId', this.sessionId);
+        params.set('circParam', circParam)
+        return this.http.post('api/circularity', params, this.headerPost)
+            .map((response: Response) => this.handleSuccess(response))
+            .catch((error: Response) => this.handleError(error));
+    }
+
+
+    handleSuccess(response) {
+        let result: any;
+        try {
+            result = response.json();
+        } catch (e) {
+            throw new Error('The server response is unsuported');
+        }
+        return result;
+    }
+    handleError(error) {
+        let result: any;
+        try {
+            result = error.json();
+        } catch (e) {
+            throw new Error('The server response is unsuported');
+        }
+        return Observable.throw(error);
+    }
 
 }

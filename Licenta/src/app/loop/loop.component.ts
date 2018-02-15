@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { TreeNode, TreeModel, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
 
 
-const actionMapping:IActionMapping = {
+const actionMapping: IActionMapping = {
   mouse: {
     contextMenu: (tree, node, $event) => {
       $event.preventDefault();
@@ -24,7 +24,7 @@ const actionMapping:IActionMapping = {
   selector: 'app-loop',
   templateUrl: './loop.component.html',
   styleUrls: ['./loop.component.css'],
-  
+
 })
 
 export class LoopComponent {
@@ -34,16 +34,16 @@ export class LoopComponent {
   constructor(public dataService: DataService) {
   }
 
-  
+
 
   // @ViewChild('tree') tree;
   // @ViewChild('tree') treeComponent: TreeComponent;
- 
+
   // ngAfterViewInit() {
   //   this.tree.treeModel.expandAll();
   //   const treeModel:TreeModel = this.treeComponent.treeModel;
   //   const firstNode:TreeNode = treeModel.getFirstRoot();
-    
+
   //   firstNode.setActiveAndVisible();
   // }
 
@@ -65,12 +65,11 @@ export class LoopComponent {
 
   }
   options: ITreeOptions = {
-    actionMapping
-  };
-  // selectItem(e) {
-  //       this.currentItem = e.itemData;
-  //       console.log(this.currentItem);
-  // }
-}
+    actionMapping,
+    isExpandedField: 'expanded',
 
+
+
+  }
+}
 

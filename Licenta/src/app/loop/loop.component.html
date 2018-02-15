@@ -1,9 +1,8 @@
-<app-navbar></app-navbar>
-<div style="margin-top:100px; overflow:auto;">
+<div class="container">
   <input [(ngModel)]="loopParam" type="text" />
   <button (click)="getLoopSection(loopParam)" class="btn btn-primary pull-right">Run</button>
   <tree-root *ngIf="nodes" id="tree" [nodes]="nodes" [options]="options" [focused]="false">
-      <ng-template #treeNodeTemplate  let-node ="node" let-index="index">
+      <ng-template #treeNodeTemplate  let-node let-index="index">
            <span [class]="node.data.className" [class.title]="true">{{ node.data.name }}</span>
            <button  *ngIf="node.data.name.includes('loop')" (click)="getLoopSection(node.data.name)" class="btn btn-default btn-sm pull-right">></button>
         </ng-template>
