@@ -1,0 +1,22 @@
+<div class="runFctComponent" style="float:left;width:100%; margin-bottom:20px;">
+    <div style="margin-bottom:15px; width:50%;">
+        <textarea [(ngModel)]="loopParam" style="width:100%; display:inline-block;margin-bottom:-9px;" rows="1"></textarea>
+    </div>
+    <div style="margin-bottom:15px; width:50%;">
+        <button (click)="getParamFct(loopParam, txt, t1, t2, t3, 'true')" class="btn" style="width:18%; padding:3px; margin-bottom:13px; display:inline-block;">Der</button>
+        <button (click)="getParamFct(loopParam, txt, t1, t2, t3, 'true')" class="btn" style="width:18%; padding:3px; margin-bottom:13px; display:inline-block;">Subs</button>
+        <button (click)="getParamFct(loopParam, txt, t1, t2, t3, 'true')" class="btn" style="width:18%; padding:3px; margin-bottom:13px; display:inline-block;">Ax</button>
+    </div>
+
+    <tree-root *ngIf="nodes" id="tree" [nodes]="nodes" [options]="options" [focused]="false" style="float:left; overflow-x:auto; margin-top:5px;">
+        <ng-template #treeNodeTemplate let-node let-index="index">
+            <span [class]="node.data.className" [class.title]="true" (click)="getParamFct(node.data.name,txt, t1, t2, t3, 'false')">{{ node.data.name}}</span>
+            <button (click)="getParamFct(node.data.name,txt, t1, t2, t3, 'false')" class="btn btn-default btn-sm pull-right">
+                <fa *ngIf="node.data.wasRun && node.data.hasChild" name="check"></fa>
+                <fa *ngIf="node.data.wasRun && !node.data.hasChild" name="ban"></fa>
+                <fa *ngIf="!node.data.wasRun" name="angle-right"></fa>
+            </button>
+        </ng-template>
+    </tree-root>
+
+</div>

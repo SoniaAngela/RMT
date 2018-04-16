@@ -68,7 +68,20 @@ export class DataService {
             .map((response: Response) => this.handleSuccess(response))
             .catch((error: Response) => this.handleError(error));
     }
+    getFct(loopParam,textArea,t1,t2,t3,btn) {
+        const params = new URLSearchParams();
+        // params.set('sessionId', this.sessionId);
+        params.set('loopParam', loopParam);
+        params.set('textArea', textArea);
+        params.set('t1', t1);
+        params.set('t2', t2);
+        params.set('t3', t3);
+        params.set('btn', btn);
 
+        return this.http.post('api/fct', params, this.headerPost)
+            .map((response: Response) => this.handleSuccess(response))
+            .catch((error: Response) => this.handleError(error));
+    }
     getCitcularity(circParam) {
         const params = new URLSearchParams();
         // params.set('sessionId', this.sessionId);
@@ -77,8 +90,22 @@ export class DataService {
             .map((response: Response) => this.handleSuccess(response))
             .catch((error: Response) => this.handleError(error));
     }
-
-
+    getExample(file){
+        const params = new URLSearchParams();
+        // params.set('sessionId', this.sessionId);
+        params.set('fsContent', file)
+        return this.http.post('api/fsContent', params, this.headerPost)
+            .map((response: Response) => this.handleSuccess(response))
+            .catch((error: Response) => this.handleError(error));
+    }
+    getFctList(sumEx){
+        const params = new URLSearchParams();
+        // params.set('sessionId', this.sessionId);
+        params.set('sumEx', sumEx)
+        return this.http.post('api/sumEx', params, this.headerPost)
+            .map((response: Response) => this.handleSuccess(response))
+            .catch((error: Response) => this.handleError(error));
+    }
     handleSuccess(response) {
         let result: any;
         try {

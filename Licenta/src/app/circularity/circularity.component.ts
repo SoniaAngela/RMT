@@ -14,26 +14,30 @@ export class CircularityComponent implements OnInit {
   circularity: Array<any>;
   currentItem: any;
   nodes: Array<any>;
-  constructor(public dataService: DataService) { }
+  components: Array<any>;
+  index:any;
+  constructor(public dataService: DataService) {
+    this.index=0;
+  }
 
   ngOnInit() {
   }
-  getCircularitySection(circParam) {
-    this.dataService.getCitcularity(circParam).subscribe(
-      (data: any) => {
-        if (data) {
-          this.circularity = data;
-          console.log(this.circularity)
 
-          console.log("loops tree")
-          this.nodes =Array(this.circularity);
-          console.log(Array(this.circularity))
-          console.log(this.nodes)
-        }
-      }, (err: any) => {
-        console.log(err)
-      });
+  addComponent() {
+ 
+    if(this.index==0){
+      this.components=[this.index];
+      this.index++;
 
+      
+    }else{
+      this.index++;
+      this.components.push(this.index);
+    }
   }
-
+  removeComponent(comp){
+    this.components.forEach( (item, index) => {
+      if(item === comp) this.components.splice(index,1);
+    });
+ }
 }

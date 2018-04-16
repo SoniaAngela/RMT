@@ -31,7 +31,17 @@ export class LoopComponent {
   loops: Array<any>;
   currentItem: any;
   nodes: Array<any>;
+  showBan = false;
+  specificEl: any;
+  scriptFiles: Array<any>;
+  textareamodel:any;
+  sumEx: any;
+  scrFiles: any;
+  isShow: any;
   constructor(public dataService: DataService) {
+    this.sumEx = "sum";
+    this.getFctList(this.sumEx);
+    this.isShow = 0;
   }
 
 
@@ -47,29 +57,69 @@ export class LoopComponent {
   //   firstNode.setActiveAndVisible();
   // }
 
-  getLoopSection(loopParam) {
-    this.dataService.getLoop(loopParam).subscribe(
+
+  //trebuie luate numele fisierelor din folder si afisate
+  getFctList(sumEx) {
+    this.dataService.getFctList(sumEx).subscribe(
       (data: any) => {
         if (data) {
-          this.loops = data;
-          console.log(this.loops)
-
-          console.log(" loops tree")
-          this.nodes = Array(this.loops);
-          console.log(Array(this.loops))
-          console.log(this.nodes)
+          this.scrFiles = data;
+          this.scriptFiles = [];
+          for (let i = 0; i < data.length; i++) {
+            this.scriptFiles[i] = data[i].name;
+          }
         }
       }, (err: any) => {
         console.log(err)
       });
-
   }
+
+  //pt fisierul ales trebuie intors textul ca string si afisat in textarea
+  getExample(file) {
+    this.dataService.getExample(file).subscribe(
+      (data: any) => {
+        if (data) {
+          this.textareamodel = data;
+        }
+      }, (err: any) => {
+        console.log(err)
+      });
+  }
+  showFiles() {
+    this.isShow = this.isShow == 0 ? 1 : 0;
+  }
+  getParamFct(loopParam, textArea, t1, t2, t3, btn) {
+    let hasChildrenNo = 0;
+    this.dataService.getFct(loopParam, textArea, t1, t2, t3, btn).subscribe(
+      (data: any) => {
+        if (data) {
+          this.loops = data;
+          this.nodes = Array(this.loops);
+        }
+      }, (err: any) => {
+        console.log(err)
+      });
+  }
+  // getLoopSection(loopParam) {
+  //   this.dataService.getLoop(loopParam).subscribe(
+  //     (data: any) => {
+  //       if (data) {
+  //         this.loops = data;
+  //         console.log(this.loops)
+
+  //         console.log("loops tree")
+  //         this.nodes = Array(this.loops);
+  //         console.log(Array(this.loops))
+  //         console.log(this.nodes)
+  //       }
+  //     }, (err: any) => {
+  //       console.log(err)
+  //     });
+
+  // }
   options: ITreeOptions = {
     actionMapping,
-    isExpandedField: 'expanded',
-
-
-
+    isExpandedField: 'true',
   }
 }
 

@@ -1,10 +1,17 @@
-<div class="container">
-  <input [(ngModel)]="circParam" type="text" />
-  <button (click)="getCircularitySection(circParam)" class="btn btn-primary pull-right">Run</button>
-  <ul>
-    <li *ngFor="let node of nodes"> 
-      {{node}}
-    </li>
-   </ul>
-</div>
+<div class="container-fluid">
+  <div style="float:left;width:90%; margin-bottom:20px;">
+    <div style="margin:auto; margin-bottom:70px; width:80%; display:block;">
+      <textarea [(ngModel)]="textareamodel" name="Custom Code" id="customCode" style="width:100%; display:block; margin:auto"></textarea>
+      <button (click)="addComponent()" class="btn btn-primary pull-right" style="width:15%; margin:20px 10px; display:block; float:right;">Add Execution</button>
+    </div>
+    <div class="row" *ngFor="let comp of components"  style="float:left; width:100%; margin-top:20px;">
+      <div class="col-md-2">
+        <button (click)="removeComponent(comp)" class="btn btn-primary pull-right" style="margin-bottom:13px; display:inline-block; float:left;">Delete</button>
+      </div>
+      <div class="col-md-10">
+        <app-runFctElement [txt]="textareamodel"></app-runFctElement>
+      </div>
 
+    </div>
+  </div>
+</div>
