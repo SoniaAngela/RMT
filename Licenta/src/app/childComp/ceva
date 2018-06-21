@@ -1,0 +1,112 @@
+router.post("/prove", function (req, res) {
+    //ver if run on button and initialize the proveJson
+    if (req.body.btn === 'true') {
+        proveproveJson = {
+            leftTerm: null,
+            rightTerm:null,
+            id: null,
+            wasRun: false,
+            hasChild: false,
+            children: []
+        }
+    }
+
+    try {
+        if (req.body.textArea) {
+            if (req.body.leftTerm && req.body.rightTerm && req.body.system) {
+                fs.writeFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.textArea +" "+ req.body.btnName + " in "+ req.body.system+ ": ", function (error) {
+                    if (error) {
+                        console.error("write error:  " + error.message);
+                    }
+                });
+            }
+        } else {
+            try {
+                fse.copySync("C:/Users/sonia/RMT/Licenta/server/rmt/examples/z-all-examples/example1.rmt", "C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt")
+            } catch (err) {
+                console.error(err)
+            }
+        }
+    } catch (err) {
+        console.error(err)
+    }
+    setTimeout(() => {
+        fs.appendFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.leftTerm + " => " + req.body.rightTerm + ";", function (error) {
+                        if (error) {
+                            console.error("write error:  " + error.message);
+                        } else {
+                            shell.cd("C:/Users/sonia/RMT/Licenta/server/rmt");
+                            if (shell.exec("rmt.exe < examples/test.rmt > examples/result.txt").code !== 0) {
+                                shell.cd("../");
+                            }
+                        };
+
+            //caut elementul in proveJson
+           var param =  `${req.body.leftTerm} =-> ${req.body.rightTerm}`.trim()
+            prove = findObjectById(proveJson, param);
+            if (proveJson.id === null || prove === null) {
+                proveJson.leftTerm = `${req.body.leftTerm} =>+ ${req.body.rightTerm}`;
+                proveJson.id = param;
+                proveJson.wasRun = true;
+                proveJson.hasChild = false;
+                proveJson.children = [];
+                prove = findObjectById(proveJson, param);
+            }
+
+            var array = fs.readFileSync(caleResultEx).toString().split("\r\n");
+            // fs.writeFile(caleResultEx, " ", function (error) {
+            //     if (error) {
+            //         console.error("write error:  " + error.message);
+            //     }
+            // });
+
+
+            console.log(array)
+            let result = array[0].slice(0, 7);
+            console.log(result)
+            solutionsNo = array[0].replace(/\D/g, '');
+            console.log(solutionsNo, "sol")
+            if (result === "Success") {
+                // if (!isNaN(solutionsNo)) {
+                if (solutionsNo == 0) {
+                    console.log("solN", solutionsNo)
+                    prove.wasRun = true;
+                    prove.hasChild = false;
+                } else {
+                    console.log("else", solutionsNo)
+                    console.log(array)
+                    for (let i = 2; i < array.length; i++) {
+                        console.log(array[i]);
+                        value = array[i];
+                        if (!value.includes("Solution")) {
+                            value = value.replace("if", "/\\");
+                            child = findObjectById(proveJson, value);
+                            var valueId =value.trim()
+                            console.log(child, "child")
+                            if (!child) {
+                                prove.children.push({
+                                    name: value,
+                                    id: valueId,
+                                    wasRun: false,
+                                    hasChild: false,
+                                    children: []
+                                });
+                                prove.wasRun = true;
+                                prove.hasChild = true;
+                            }
+                            console.log(proveJson);
+                        }
+                        i++;
+                    };
+                }
+            } else {
+                proveJson.name = "Error: " + array;
+                proveJson.id = 0;
+                proveJson.hasChild = null;
+                proveJson.children = [];
+            }
+            shell.cd("../");
+            res.proveJson(proveJson);
+        });
+    }, 0);
+});

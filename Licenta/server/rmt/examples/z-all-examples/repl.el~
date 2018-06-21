@@ -1,0 +1,13 @@
+
+(let ((case-fold-search t)) ; or nil
+
+  (goto-char (point-min))
+  (while (search-forward "myStr1" nil t)
+    (replace-match "myReplaceStr1"))
+
+  (goto-char (point-min))
+  (while (search-forward "myStr2" nil t)
+    (replace-match "myReplaceStr2"))
+
+  ;; repeat for other string pairs
+  )

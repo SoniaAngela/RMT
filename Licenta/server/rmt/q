@@ -1,0 +1,6 @@
+got verbosity <0>
+Success: 2 solutions.
+Solution #1:
+(loop (mplus S N) (mminus N 1)) /\ (mle 1 N)
+Solution #2:
+(done S) /\ (bnot (mle 1 N))

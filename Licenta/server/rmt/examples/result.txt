@@ -1,5 +1,3 @@
-2 solutions.
-Solution #1:
-loop(mplus(mplus(mplus(mplus(mplus(S,N),mminus(N,mone)),mminus(mminus(N,mone),mone)),mminus(mminus(mminus(N,mone),mone),mone)),mminus(mminus(mminus(mminus(N,mone),mone),mone),mone)),mminus(mminus(mminus(mminus(mminus(N,mone),mone),mone),mone),mone)) if band(band(band(band(mle(mone,N),mle(mone,mminus(N,mone))),mle(mone,mminus(mminus(N,mone),mone))),mle(mone,mminus(mminus(mminus(N,mone),mone),mone))),mle(mone,mminus(mminus(mminus(mminus(N,mone),mone),mone),mone)))
-Solution #2:
-done(mplus(mplus(mplus(mplus(S,N),mminus(N,mone)),mminus(mminus(N,mone),mone)),mminus(mminus(mminus(N,mone),mone),mone))) if band(band(band(band(mle(mone,N),mle(mone,mminus(N,mone))),mle(mone,mminus(mminus(N,mone),mone))),mle(mone,mminus(mminus(mminus(N,mone),mone),mone))),bnot(mle(mone,mminus(mminus(mminus(mminus(N,mone),mone),mone),mone))))
+expected ) at line 22, column 31.
+  circ (loop S N) => (loop S N-1) : (loop S N) 
+                              ^

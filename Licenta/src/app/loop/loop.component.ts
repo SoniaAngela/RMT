@@ -10,7 +10,7 @@ const actionMapping: IActionMapping = {
   mouse: {
     contextMenu: (tree, node, $event) => {
       $event.preventDefault();
-      alert(`context menu for ${node.data.name}`);
+      // alert(`context menu for ${node.data.name}`);
     },
     dblClick: (tree, node, $event) => {
       if (node.hasChildren) {
@@ -40,8 +40,9 @@ export class LoopComponent {
   isShow: any;
   constructor(public dataService: DataService) {
     this.sumEx = "sum";
-    this.getFctList(this.sumEx);
+    this.getExamplesList(this.sumEx);
     this.isShow = 0;
+    this.textareamodel= this.getExample("search_default.rmt");
   }
 
 
@@ -59,8 +60,8 @@ export class LoopComponent {
 
 
   //trebuie luate numele fisierelor din folder si afisate
-  getFctList(sumEx) {
-    this.dataService.getFctList(sumEx).subscribe(
+  getExamplesList(exampleList) {
+    this.dataService.getExamplesList(exampleList).subscribe(
       (data: any) => {
         if (data) {
           this.scrFiles = data;
@@ -85,12 +86,14 @@ export class LoopComponent {
         console.log(err)
       });
   }
+  
   showFiles() {
     this.isShow = this.isShow == 0 ? 1 : 0;
   }
+
   getParamFct(loopParam, textArea, t1, t2, t3, btn) {
     let hasChildrenNo = 0;
-    this.dataService.getFct(loopParam, textArea, t1, t2, t3, btn).subscribe(
+    this.dataService.getSearch(loopParam, textArea, t1, t2, t3, btn).subscribe(
       (data: any) => {
         if (data) {
           this.loops = data;
@@ -119,7 +122,7 @@ export class LoopComponent {
   // }
   options: ITreeOptions = {
     actionMapping,
-    isExpandedField: 'true',
+    isExpandedField: 'expanded',
   }
 }
 

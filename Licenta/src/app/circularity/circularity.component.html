@@ -1,15 +1,42 @@
 <div class="container-fluid">
-  <div style="float:left;width:90%; margin-bottom:20px;">
-    <div style="margin:auto; margin-bottom:70px; width:80%; display:block;">
-      <textarea [(ngModel)]="textareamodel" name="Custom Code" id="customCode" style="width:100%; display:block; margin:auto"></textarea>
-      <button (click)="addComponent()" class="btn btn-primary pull-right" style="width:15%; margin:20px 10px; display:block; float:right;">Add Execution</button>
+
+  <div class="container-fluid" style="width:100%; display:inline-block; float:left">
+    <button (click)="showFiles()" class="btn btn-primary pull-right" style="width:23%; margin-bottom:13px; display:block;  float:left;">
+      Examples</button>
+  </div>
+  <div class="container-fluid" style="width:100%; display:inline-block; float:left;">
+    <div *ngIf="isShow==1" class="collaps-vert-menu" style="width:25%; margin-bottom:13px; display:inline-block; float:left;">
+      <ul style="list-style: none;">
+        <li *ngFor="let file of scriptFiles" (click)="getExample(file)" style="padding: 5px;">{{file}}</li>
+      </ul>
     </div>
-    <div class="row" *ngFor="let comp of components"  style="float:left; width:100%; margin-top:20px;">
-      <div class="col-md-2">
-        <button (click)="removeComponent(comp)" class="btn btn-primary pull-right" style="margin-bottom:13px; display:inline-block; float:left;">Delete</button>
+    <div style=" margin-bottom:20px; display:inline-block; width:75%; ">
+      <div style="margin-bottom:15px; width:100%; float: left;">
+
+        <div style="display:block;width:100%; float: left;">
+          <textarea [(ngModel)]="textareamodel" name="Custom Code" id="customCode" style="width:100%; min-height:100px; float:left;"></textarea>
+
+        </div>
+        <div style="width:100%; margin:20px 0; display:block; float:left;">
+          <input [(ngModel)]="system" placeholder="System Term" name="Custom Code" id="system" style="width:20%; display:block; float:left;">
+
+          <button (click)="addComponent()" class="btn btn-primary pull-right" style="width:20%; display:block; float:right;">Add Circularity</button>
+        </div>
       </div>
-      <div class="col-md-10">
-        <app-runFctElement [txt]="textareamodel"></app-runFctElement>
+      <div *ngIf="showCirc==1">
+        <div class="row" *ngFor="let comp of circExec" style="float:left; width:100%; margin-top:20px;">
+          <div class="col-md-2">
+            <button (click)="removeComponent(comp)" class="btn btn-primary pull-right" style="margin-bottom:13px; display:inline-block; float:left;">Delete</button>
+          </div>
+          <!-- <div class="col-md-10">
+          <app-runFctElement [txt]="textareamodel" [system]="system" [circExec]="circExec"></app-runFctElement>
+        </div> -->
+          <div class="col-md-10">
+            <app-childComp (sendLeftItem)='getLeftItem($event)' (sendRightItem)='getRightItem($event)' [rightTermsList]='rightTermsList'
+              [leftTermsList]='leftTermsList' [selectedMenu]='selectedMenu' [currentItem]="currentItem" [txt]="textareamodel"
+              [system]="system" [circExec]="circExec"></app-childComp>
+          </div>
+        </div>
       </div>
 
     </div>

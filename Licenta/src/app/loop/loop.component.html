@@ -1,30 +1,41 @@
-<div class="container-fluid" style="width:100%; display:inline-block; float:left;">
-    <button (click)="showFiles()" class="btn btn-primary pull-right" style="width:15%; margin-bottom:13px; display:block;  float:left;">
-  Examples</button>
-</div>
-<div class="container-fluid" style="width:100%; display:inline-block; float:right;">
-  <div *ngIf="isShow==1" class="collaps-vert-menu" style="width:15%; margin-bottom:13px; display:inline-block; float:left;">
-    <ul>
-      <li *ngFor="let file of scriptFiles" (click)="getExample(file)">{{file}}</li>
-    </ul>
+<div class="container-fluid">
+  <div class="container-fluid" style="width:100%; display:inline-block; float:left">
+    <button (click)="showFiles()" class="btn btn-primary pull-right" style="width:23%; margin-bottom:13px; display:block;  float:left;">
+      Examples</button>
   </div>
-  <div style="margin:auto; margin-bottom:20px; display:inline-block; ">
-    <div style="margin-bottom:15px;">
-      <textarea [(ngModel)]="textareamodel" name="Custom Code" id="customCode" style="width:100%; min-height:100px;"></textarea>
-      <div style="display:inline-block;width:40%; float: left;">
-        <input [(ngModel)]="t1" pattern="\d+" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-          type="text" style="display:inline-block; width:20%; margin-top:2px;" />
-        <input [(ngModel)]="t2" min="{{t1}}" pattern="\d+" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-          type="text" style="display:inline-block; width:20%; margin-top:2px;" />
-        <input [(ngModel)]="t3" type="text" style="display:inline-block; width:40%; margin-top:2px;" />
-      </div>
-      <div style="display:inline-block; width:50%; float:right;">
-        <textarea [(ngModel)]="loopParam" style="width:60%; display:inline-block;margin-bottom:-9px;margin-top:2px;" rows="1"></textarea>
-        <button (click)="getParamFct(loopParam, textareamodel, t1, t2, t3, 'true')" class="btn btn-primary pull-right" style="width:38%; margin-bottom:13px; display:inline-block;">Run</button>
-      </div>
+  <div class="container-fluid" style="width:100%; display:inline-block; float:left;">
+    <div *ngIf="isShow==1" class="collaps-vert-menu" style="width:25%; margin-bottom:13px; display:inline-block; float:left;">
+      <ul style="list-style: none;">
+        <li *ngFor="let file of scriptFiles" (click)="getExample(file)"  style="padding: 5px;">{{file}}</li>
+      </ul>
     </div>
+    <div style=" margin-bottom:20px; display:inline-block; width:75%; ">
+      <div style="margin-bottom:15px; float: left;">
 
-    <tree-root *ngIf="nodes" id="tree" [nodes]="nodes" [options]="options" [focused]="false" style="float:left; overflow-x:auto; margin-top:10px;">
+        <div style="display:block;width:100%; float: left;"> 
+            <textarea [(ngModel)]="textareamodel" name="Custom Code" id="customCode" style="width:100%; min-height:100px; float:left;"></textarea>
+
+        </div>
+        <div style="display:block;width:100%; float: left; margin-top:20px;">
+          <div style="display:inline-block;width:40%; float: left;">
+            <input [(ngModel)]="t1" pattern="\d+" placeholder="min" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+              type="text" style="display:inline-block; width:20%; margin-top:2px;" />
+            <input [(ngModel)]="t2" min="{{t1}}" placeholder="max" pattern="\d+" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+              type="text" style="display:inline-block; width:20%; margin-top:2px;" />
+            <input [(ngModel)]="t3" type="text" placeholder="system" style="display:inline-block; width:40%; margin-top:2px;" />
+          </div>
+          <div style="display:inline-block; width:50%; float:right;">
+            <textarea [(ngModel)]="loopParam" placeholder="term" style="width:60%; display:inline-block;margin-bottom:-9px;margin-top:2px;" rows="1"></textarea>
+            <button (click)="getParamFct(loopParam, textareamodel, t1, t2, t3, 'true')" class="btn btn-primary pull-right" style="width:38%; margin-bottom:13px; display:inline-block;">Run</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <div style="float: left; width:100%;">
+    <tree-root *ngIf="nodes" id="tree" [nodes]="nodes" [options]="options" [focused]="false" style="float:left; overflow-x:auto; margin-top:30px;">
       <ng-template #treeNodeTemplate let-node let-index="index">
         <span [class]="node.data.className" [class.title]="true" (click)="getParamFct(node.data.name,textareamodel, t1, t2, t3, 'false')">{{ node.data.name}}</span>
         <button (click)="getParamFct(node.data.name,textareamodel, t1, t2, t3, 'false')" class="btn btn-default btn-sm pull-right">
@@ -35,6 +46,6 @@
         <!-- <button *ngIf="node.data.name.includes('loop')" (click)="getParamFct(node.data.name,textareamodel, t1, t2, t3)" class="btn btn-default btn-sm pull-right">></button> -->
       </ng-template>
     </tree-root>
-
   </div>
+
 </div>
