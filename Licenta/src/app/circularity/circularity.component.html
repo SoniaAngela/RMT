@@ -5,8 +5,8 @@
       Examples</button>
   </div>
   <div class="container-fluid" style="width:100%; display:inline-block; float:left;">
-    <div *ngIf="isShow==1" class="collaps-vert-menu" style="width:25%; margin-bottom:13px; display:inline-block; float:left;">
-      <ul style="list-style: none;">
+    <div *ngIf="isShow==1" class="collaps-vert-menu" style="width:25%; margin-bottom:0px; display:inline-block; float:left;">
+      <ul style="list-style: none; overflow-y: auto; height: 73vh; margin: 0; width: 21vw;">
         <li *ngFor="let file of scriptFiles" (click)="getExample(file)" style="padding: 5px;">{{file}}</li>
       </ul>
     </div>

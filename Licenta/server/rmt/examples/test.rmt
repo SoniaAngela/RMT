@@ -19,4 +19,4 @@ constrained-rewrite-system sum
 
   (loop S I) /\ (mle 0 I) =>
   (done (mplus S (mdiv (mtimes I (mplus I 1)) 2)));
-  circ (loop S N) => (loop S N-1) : (loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);(loop S N) => (loop S N-1);
+   der in sum: (init N) /\ (mle 0 N)  => (done (mdiv (mtimes N (mplus N 1)) 2));

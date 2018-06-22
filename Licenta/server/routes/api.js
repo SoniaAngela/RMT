@@ -267,7 +267,6 @@ router.post("/prove", function (req, res) {
             solutionsNo = array[0].replace(/\D/g, '');
             console.log(solutionsNo, "sol")
             if (result === "Success") {
-                // if (!isNaN(solutionsNo)) {
                 console.log("result")
                 if (solutionsNo == 0) {
                     var rterm = ""
@@ -358,28 +357,6 @@ router.post("/prove", function (req, res) {
 
 
 router.post("/circ", function (req, res) {
-    //ver if run on button and initialize the proveJson
-
-    // try {
-    //     if (req.body.textArea) {
-    //         if (req.body.leftTerm && req.body.rightTerm && req.body.system && req.body.leftBtnTerm && req.body.rightBr) {
-    //             fs.writeFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.textArea + " " + req.body.btnName + " " + req.body.system + ": ", function (error) {
-    //                 if (error) {
-    //                     console.error("write error:  " + error.message);
-    //                 }
-    //             });
-    //         }
-    //     } else {
-    //         try {
-    //             fse.copySync("C:/Users/sonia/RMT/Licenta/server/rmt/examples/z-all-examples/example1.rmt", "C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt")
-    //         } catch (err) {
-    //             console.error(err)
-    //         }
-    //     }
-    // } catch (err) {
-    //     console.error(err)
-    // }
-    // setTimeout(() => {
     if (req.body.textArea) {
         if (req.body.leftTerm && req.body.rightTerm && req.body.leftBtnTerm && req.body.rightBtnTerm)
             console.log(req.body.leftTerm, req.body.rightTerm, req.body.leftBtnTerm, req.body.rightBtnTerm)
@@ -432,7 +409,6 @@ router.post("/circ", function (req, res) {
             solutionsNo = array[0].replace(/\D/g, '');
             console.log(solutionsNo, "sol")
             if (result == "Success") {
-                // if (!isNaN(solutionsNo)) {
                 console.log("result")
                 if (solutionsNo == 0) {
                     var rterm = "";
@@ -519,262 +495,12 @@ router.post("/circ", function (req, res) {
                     proveJson.hasChild = null;
                     proveJson.children = [];
                 }
-                    // proveJson.leftTerm = "Error "
-                // proveJson.rightTerm = array;
-                // proveJson.id = 0;
-                // proveJson.hasChild = null;
-                // proveJson.children = [];
             }
             shell.cd("../");
             res.json(proveJson);
         });
     }
-    // }, 0);
 });
-
-
-
-
-
-
-// params.set('leftTerm', leftTerm);
-// params.set('rightTerm', rightTerm);
-// params.set('textArea', txt);
-// params.set('btnName', btnName);
-// params.set('btn', btn);
-// params.set('system', system);
-
-// router.post("/prove", function (req, res) {
-//     //ver if run on button and initialize the json
-//     if (req.body.btn === 'true') {
-//         console.log(req.body.btn)
-//         proveJson = {
-//             id: null,
-//             leftTerm: null,
-//             rightTerm:null,
-//             wasRun: false,
-//             hasChild: false,
-//             children: []
-//         }
-//     }
-//     try {
-//         if (req.body.textArea) {
-//             if (req.body.leftTerm && req.body.rightTerm && req.body.system) {
-//                 fs.writeFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.textArea +" "+ req.body.btnName + " in "+ req.body.system+ ": ", function (error) {
-//                     if (error) {
-//                         console.error("write error:  " + error.message);
-//                     }
-//                 });
-//             }
-//         } else {
-//             try {
-//                 fse.copySync("C:/Users/sonia/RMT/Licenta/server/rmt/examples/z-all-examples/example1.rmt", "C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt")
-//             } catch (err) {
-//                 console.error(err)
-//             }
-//         }
-//     } catch (err) {
-//         console.error(err)
-//     }
-//     setTimeout(() => {
-//         fs.appendFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.leftTerm + " => " + req.body.rightTerm + ";", function (error) {
-//             if (error) {
-//                 console.error("write error:  " + error.message);
-//             } else {
-//                 shell.cd("C:/Users/sonia/RMT/Licenta/server/rmt");
-//                 if (shell.exec("rmt.exe < examples/test.rmt > examples/result.txt").code !== 0) {
-//                     shell.cd("../");
-//                 }
-//             };
-//             var val= `${req.body.leftTerm} => ${req.body.rightTerm}`.trim()
-//             //caut elementul in proveJson
-//             prove = findObjectById(val);
-//             if (proveJson.id === null || prove === null) {
-//                 val = `${req.body.leftTerm} => ${req.body.rightTerm}`.trim()
-//                 proveJson.id = val;
-//                 proveJson.leftTerm = req.body.leftTerm;
-//                 proveJson.rightTerm=req.body.rightTerm;
-//                 proveJson.wasRun = true;
-//                 proveJson.hasChild = false;
-//                 proveJson.children = [];
-//                 prove = findObjectById(proveJson,  `${req.body.leftTerm} => ${req.body.rightTerm}`);
-//             }
-
-//             var array = fs.readFileSync(caleResultEx).toString().split("\r\n");
-//             fs.writeFile(caleResultEx, " ", function (error) {
-//                 if (error) {
-//                     console.error("write error:  " + error.message);
-//                 }
-//             });
-
-
-//             console.log(array)
-//             let result = array[0].slice(0, 7);
-//             console.log(result)
-//             solutionsNo = array[0].replace(/\D/g, '');
-//             console.log(solutionsNo, "sol")
-//             if (result === "Success") {
-//                 // if (!isNaN(solutionsNo)) {
-//                 if (solutionsNo == 0) {
-//                     console.log("solN", solutionsNo)
-
-//                     proveJson.wasRun = true;
-//                     proveJson.hasChild = false;
-//                 } else {
-//                     console.log("else", solutionsNo)
-//                     console.log(array)
-//                     for (let i = 1; i < array.length; i++) {
-//                         console.log(array[i]);
-//                         value = array[i];
-//                         if (!value.includes("Solution")) {
-//                             value = value.replace("if", "/\\");
-//                             child = findObjectById(proveJson, value);
-//                             console.log(child)
-//                             if (!child) {
-//                                 var splitValues= value.split("=>");
-//                                 var leftValue= splitValues[0];
-//                                 let rightValue= splitValues[1];
-//                                 val=value.trim
-//                                 prove.children.push({
-//                                     id: val,
-//                                     leftTerm:leftValue,
-//                                     rightTerm:rightValue,
-//                                     wasRun: false,
-//                                     hasChild: false,
-//                                     children: []
-//                                 });
-//                                 prove.wasRun = true;
-//                                 prove.hasChild = true;
-//                             }
-//                             console.log(proveJson);
-//                         }
-//                         i++;
-//                     };
-//                 }
-//             } else {
-//                 proveJson.leftTerm = "Error: " + array;
-//                 proveJson.id = 0;
-//                 proveJson.hasChild = null;
-//                 proveJson.children = [];
-//             }
-//             shell.cd("../");
-//             res.json(proveJson);
-//         });
-//     }, 0);
-// });
-
-//     getCirc(leftTerm, rightTerm, textArea, btnName, leftBtnTerm, rightBtnTerm, system, btn)
-
-
-// router.post("/circ", function (req, res) {
-//     //ver if run on button and initialize the json
-//     if (req.body.btn === 'true') {
-//         circJson = {
-//             name: null,
-//             id: null,
-//             wasRun: false,
-//             hasChild: false,
-//             children: []
-//         }
-//     }
-
-//     try {
-//         if (req.body.textArea) {
-//             if (req.body.t1 && req.body.t2 && req.body.t3) {
-//                 //search [1,2] in sum :loop(S, N);
-//                 fs.writeFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.textArea + "search [" + req.body.t1 + "," + req.body.t2 + "] in " + req.body.t3 + ": ", function (error) {
-//                     if (error) {
-//                         console.error("write error:  " + error.message);
-//                     }
-//                 });
-
-//             } else {
-//                 fs.writeFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.textArea + "search [1,1] in sum: ", function (error) {
-//                     if (error) {
-//                         console.error("write error:  " + error.message);
-//                     }
-//                 });
-
-//             }
-//         } else {
-//             try {
-//                 fse.copySync("C:/Users/sonia/RMT/Licenta/server/rmt/examples/z-all-examples/example1.rmt", "C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt")
-//             } catch (err) {
-//                 console.error(err)
-//             }
-//         }
-//     } catch (err) {
-//         console.error(err)
-//     }
-//     setTimeout(() => {
-//         fs.appendFile("C:/Users/sonia/RMT/Licenta/server/rmt/examples/test.rmt", req.body.loopParam + ";", function (error) {
-//             if (error) {
-//                 console.error("write error:  " + error.message);
-//             } else {
-//                 shell.cd("C:/Users/sonia/RMT/Licenta/server/rmt");
-//                 if (shell.exec("rmt.exe < examples/test.rmt > examples/result.txt").code !== 0) {
-//                     shell.cd("../");
-//                 }
-//             };
-
-//             //caut elementul in json
-//             loop = findObjectById(proveJson, req.body.loopParam);
-//             if (proveJson.id == null || loop == null) {
-//                 proveJson.name = req.body.loopParam;
-//                 proveJson.id = req.body.loopParam;
-//                 proveJson.wasRun = true;
-//                 proveJson.hasChild = false;
-//                 proveJson.children = [];
-//                 loop = findObjectById(proveJson, req.body.loopParam);
-//             }
-
-//             var array = fs.readFileSync(caleResultEx).toString().split("\r\n");
-//             // fs.writeFile(caleResultEx, " ", function (error) {
-//             //     if (error) {
-//             //         console.error("write error:  " + error.message);
-//             //     }
-//             // });
-//             solutionsNo = array[0].replace(/(^\d+)(.+$)/i, '$1');
-//             if (!isNaN(solutionsNo)) {
-//                 if (solutionsNo == 0) {
-//                     loop.wasRun = true;
-//                     loop.hasChild = false;
-//                 } else {
-//                     for (let i = 2; i < array.length; i++) {
-//                         console.log(array[i]);
-//                         value = array[i];
-//                         if (value.includes("if")) {
-//                             value = value.replace("if", "/\\");
-//                             child = findObjectById(proveJson, value);
-//                             if (!child) {
-//                                 loop.children.push({
-//                                     name: value,
-//                                     id: value,
-//                                     wasRun: false,
-//                                     hasChild: false,
-//                                     children: []
-//                                 });
-//                                 loop.wasRun = true;
-//                                 loop.hasChild = true;
-//                             }
-//                             console.log(proveJson);
-//                         }
-//                         i++;
-//                     };
-//                 }
-//             }
-//             else {
-//                 proveJson.name = array;
-//                 proveJson.id = 0;
-//                 proveJson.hasChild = null;
-//                 proveJson.children = [];
-//             }
-//             shell.cd("../");
-//             res.json(proveJson);
-//         });
-//     }, 0);
-// });
-
 
 
 router.post("/examplesList", function (req, res) {

@@ -1,3 +1,3 @@
-expected ) at line 22, column 31.
-  circ (loop S N) => (loop S N-1) : (loop S N) 
-                              ^
+Success: 1 solutions.
+Solution #1:
+(loop 0 N) /\ (mle 0 N) => (done (mdiv (mtimes N (mplus N 1)) 2)) /\ true
