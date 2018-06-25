@@ -22,9 +22,10 @@ export class CircularityComponent implements OnInit {
   sumEx: any;
   scrFiles: any;
   isShow: any;
+  showModel: any;
   showCirc: any;
-  // circIndex: Array<any>;
   circExec: Array<any>;
+  systemError: any;
   selectedMenu: Array<any>;
   leftTermsList: Array<any>;
   rightTermsList: Array<any>;
@@ -34,6 +35,8 @@ export class CircularityComponent implements OnInit {
     this.sumEx = "sum";
     this.getExamplesList(this.sumEx);
     this.isShow = 0;
+    this.showModel = 0;
+    this.systemError = 0
     this.showCirc = 0
     this.textareamodel = this.getExample("prove_default.rmt");
     this.circExec = [{
@@ -87,56 +90,75 @@ export class CircularityComponent implements OnInit {
         console.log(err)
       });
   }
+  onSystemChange(){
+    this.systemError = 0
+
+  }
   showFiles() {
     this.isShow = this.isShow == 0 ? 1 : 0;
   }
-
-  addComponent() {
-    if (this.index === 1) {
-      // this.components = [this.index];
-      // this.circIndex = ["Circ " + this.index]; button: null,
-
-      this.circExec = [{
-        button: `Circ ${this.index}`,
-        leftTerm: "",
-        rightTerm: "",
-        circIndex: this.index,
-        leftId: `leftCirc${this.index}`,
-        rightId: `leftCic${this.index}`,
-        btnId: `circ${this.index}`
-
-      }]
-
-      this.currentItem.push(`${this.index}`);
-
-      this.index++;
-    } else {
-      // this.components.push(this.index);
-      // this.circIndex.push("Circ " + this.index);
-
-      //   this.index++;
-
-      // console.log(this.circIndex)
-
-      this.circExec.push({
-        button: `Circ ${this.index}`,
-        leftTerm: "",
-        rightTerm: "",
-        circIndex: this.index,
-        leftId: `leftCirc${this.index}`,
-        rightId: `leftCic${this.index}`,
-        btnId: `circ${this.index}`
-      })
-
-      this.currentItem.push(`${this.index}`);
-
-      this.index++;
-    }
-    this.showCirc = 1;
+  showExecution() {
+    this.showModel = this.showModel == 0 ? 1 : 0;
   }
 
-  createList(item,name) {
-    if(name==="left"){
+  getSystemError(event) {
+    // console.log("left", event)
+    this.systemError = event
+  }
+
+  addComponent(event) {
+if(!event){
+  this.systemError = 1;
+
+}
+else{
+      if (this.index === 1) {
+        // this.components = [this.index];
+        // this.circIndex = ["Circ " + this.index]; button: null,
+
+        this.circExec = [{
+          button: `Circ ${this.index}`,
+          leftTerm: "",
+          rightTerm: "",
+          circIndex: this.index,
+          leftId: `leftCirc${this.index}`,
+          rightId: `leftCic${this.index}`,
+          btnId: `circ${this.index}`
+
+        }]
+
+        this.currentItem.push(`${this.index}`);
+
+        this.index++;
+      } else {
+        // this.components.push(this.index);
+        // this.circIndex.push("Circ " + this.index);
+
+        //   this.index++;
+
+        // console.log(this.circIndex)
+
+        this.circExec.push({
+          button: `Circ ${this.index}`,
+          leftTerm: "",
+          rightTerm: "",
+          circIndex: this.index,
+          leftId: `leftCirc${this.index}`,
+          rightId: `leftCic${this.index}`,
+          btnId: `circ${this.index}`
+        })
+
+        this.currentItem.push(`${this.index}`);
+
+        this.index++;
+      }
+      this.showCirc = 1;
+    
+  }
+}
+
+  createList(item, name) {
+    if (name === "left") {
       let isFind = false;
       if (item.btn != null) {
         if (this.leftTermsList[0].button == null) {
@@ -160,13 +182,13 @@ export class CircularityComponent implements OnInit {
                   leftTerm: item.leftItem,
                 }
               )
-              isFind =true;
+              isFind = true;
             }
           });
         }
       }
     }
-    if(name==="right"){
+    if (name === "right") {
       let isFind = false;
       if (item.btn != null) {
         if (this.rightTermsList[0].button == null) {
@@ -189,7 +211,7 @@ export class CircularityComponent implements OnInit {
                   rightTerm: item.rightItem,
                 }
               )
-              isFind =true;
+              isFind = true;
             }
           });
         }
@@ -199,11 +221,12 @@ export class CircularityComponent implements OnInit {
   }
   getLeftItem(event) {
     // console.log("left", event)
-    this.createList(event,"left");
+    this.createList(event, "left");
   }
+
   getRightItem(event) {
     // console.log("right", event)
-    this.createList(event,"right");
+    this.createList(event, "right");
 
   }
 

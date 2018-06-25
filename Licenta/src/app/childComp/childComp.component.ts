@@ -30,7 +30,11 @@ export class ChildComp {
     loops: any;
     item: any;
     newlastItem = [];
+    leftTermError: any;
+    rightTermError: any;
+    systemError: any;
     lastItem: any;
+
     @Input() txt;
     @Input() system;
     @Input() circExec: Array<any>;
@@ -41,6 +45,7 @@ export class ChildComp {
 
     @Output() sendLeftItem = new EventEmitter();
     @Output() sendRightItem = new EventEmitter();
+    @Output() sendSystemError = new EventEmitter();
 
     ngOnInit() {
 
@@ -55,22 +60,49 @@ export class ChildComp {
     }
 
     constructor(public dataService: DataService) {
+        this.leftTermError = 0;
+        this.rightTermError = 0;
+        this.systemError = 0;
     }
     getCurentItem() {
         console.log("lastItem from getCurent Item")
         console.log(this.lastItem)
         return `circ${this.lastItem}`;
     }
+    onLeftTermChange() {
+        this.leftTermError = 0
+    }
+    onRightTermChange() {
+        this.rightTermError = 0
+    }
     getProve(txt, system, leftTerm, rightTerm, btnName, btn) {
-        this.dataService.getProve(txt, system, leftTerm, rightTerm, btnName, btn).subscribe(
-            (data: any, ) => {
-                if (data) {
-                    this.loops = data;
-                    this.nodes = Array(this.loops);
-                }
-            }, (err: any) => {
-                console.log(err)
-            });
+        if (system && leftTerm && rightTerm) {
+            this.dataService.getProve(txt, system, leftTerm, rightTerm, btnName, btn).subscribe(
+                (data: any, ) => {
+                    if (data) {
+                        this.loops = data;
+                        this.nodes = Array(this.loops);
+                    }
+                }, (err: any) => {
+                    console.log(err)
+                });
+            this.leftTermError = 0;
+            this.rightTermError = 0;
+            this.systemError = 0;
+            this.emitLeftItem(this.systemError);
+        } else {
+
+            if (!leftTerm) {
+                this.leftTermError = 1;
+            }
+            if (!rightTerm) {
+                this.rightTermError = 1;
+            }
+            if (!system) {
+                this.systemError = 1
+                this.emitSystemError(this.systemError);
+            }
+        }
     }
     getCirc(txt, system, leftTerm, rightTerm, btnName, btn) {
         let leftBr = "", rightBr = "";
@@ -84,21 +116,32 @@ export class ChildComp {
                 rightBr = term.rightTerm;
             }
         });
-            // console.log(system, leftTerm, rightTerm, btnName, btn, leftBr, rightBr)
+        // console.log(system, leftTerm, rightTerm, btnName, btn, leftBr, rightBr)
 
+        if (system && leftTerm && rightTerm && rightBr && leftBr) {
+            this.dataService.getCirc(txt, system, leftTerm, rightTerm, leftBr, rightBr, btn).subscribe(
+                (data: any) => {
+                    if (data) {
+                        this.loops = data;
+                        this.nodes = Array(this.loops);
+                    }
+                }, (err: any) => {
+                    console.log(err)
+                });
 
-        this.dataService.getCirc(txt, system, leftTerm, rightTerm, leftBr, rightBr, btn).subscribe(
-            (data: any) => {
-                if (data) {
-                    this.loops = data;
-                    this.nodes = Array(this.loops);
-                }
-            }, (err: any) => {
-                console.log(err)
-            });
-
-        // console.log(this.selectedMenu);
-
+            // console.log(this.selectedMenu);
+        } else {
+            if (!leftTerm) {
+                this.leftTermError = 1;
+            }
+            if (!rightTerm) {
+                this.rightTermError = 1;
+            }
+            if (!system) {
+                this.systemError = 1
+                this.emitSystemError(this.systemError);
+            }
+        }
     }
     changeLeftItem(leftTerm, id) {
         let button = this.getCurentItem();
@@ -123,13 +166,14 @@ export class ChildComp {
 
     emitLeftItem($event) {
         this.sendLeftItem.emit($event);
-
-
     }
 
     emitRightItem($event) {
         this.sendRightItem.emit($event);
 
+    }
+    emitSystemError($event) {
+        this.sendSystemError.emit($event);
     }
 
 }

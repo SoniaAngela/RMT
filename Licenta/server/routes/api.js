@@ -185,6 +185,7 @@ router.post("/search", function (req, res) {
             res.json(json);
         });
     }, 0);
+   
 });
 
 router.post("/prove", function (req, res) {
@@ -230,7 +231,7 @@ router.post("/prove", function (req, res) {
             if (req.body.btn === 'true') {
                 console.log("ceva----------------------------", req.body.btn)
 
-                proveproveJson = {
+                proveJson = {
                     leftTerm: null,
                     rightTerm: null,
                     id: null,
@@ -278,13 +279,13 @@ router.post("/prove", function (req, res) {
                     } else {
                         for (let i = 0; i < array.length; i++) {
                             rterm += `\n ${array[i]}`
-                        }
-                        var leftItem = "Result ";
+                        };
+                        var leftItem = "Result: "
                         var rightItem = rterm;
                         console.log(leftItem, rightItem, "ceva2")
 
                     }
-                    prove.children =[];
+                    prove.children = [];
                     prove.children.push({
                         leftTerm: leftItem,
                         rightTerm: rightItem,
@@ -310,7 +311,12 @@ router.post("/prove", function (req, res) {
 
                             console.log(child, "child")
                             if (!child) {
-                                prove.children=[];
+                                if (prove.children.length == 1 && prove.children[0].leftTerm == "Result: ") {
+                                    console.log(prove.children.length, prove.children[0].leftTerm, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+                                    console.log("prove.left=result", )
+                                    prove.children = [];
+                                }
                                 prove.children.push({
                                     leftTerm: leftItem,
                                     rightTerm: rightItem,
@@ -328,11 +334,12 @@ router.post("/prove", function (req, res) {
                     };
                 }
             } else {
+
                 result = array[0].slice(0, 5);
                 if (result === "Error") {
-                    prove.children=[];
+                    prove.children = [];
                     prove.children.push({
-                        leftTerm: "Result " ,
+                        leftTerm: "Result: ",
                         rightTerm: array[0],
                         id: 1,
                         wasRun: true,
@@ -340,7 +347,7 @@ router.post("/prove", function (req, res) {
                         children: []
                     });
                 }
-                else{
+                else {
                     proveJson.leftTerm = "Error "
                     proveJson.rightTerm = array;
                     proveJson.id = 0;
@@ -372,7 +379,7 @@ router.post("/circ", function (req, res) {
             if (req.body.btn === 'true') {
                 console.log("ceva----------------------------", req.body.btn)
 
-                proveproveJson = {
+                proveJson = {
                     leftTerm: null,
                     rightTerm: null,
                     id: null,
@@ -412,13 +419,13 @@ router.post("/circ", function (req, res) {
                 console.log("result")
                 if (solutionsNo == 0) {
                     var rterm = "";
-                    var valueId="";
+                    var valueId = "";
 
                     if (array.length == 1) {
                         console.log("solN", solutionsNo)
                         var leftItem = "Result: ";
                         var rightItem = array[0];
-                         valueId = array[0].replace(/\s/g, '')
+                        valueId = array[0].replace(/\s/g, '')
 
                         console.log(leftTerm, rightTerm, "ceva")
                     } else {
@@ -427,12 +434,12 @@ router.post("/circ", function (req, res) {
                             valueId = valueId + array[i].replace(/\s/g, '')
 
                         }
-                        var leftItem = "Result ";
+                        var leftItem = "Result: ";
                         var rightItem = rterm;
                         console.log(leftTerm, rightTerm, "ceva2")
 
                     }
-                    prove.children=[];
+                    prove.children = [];
                     prove.children.push({
                         leftTerm: leftItem,
                         rightTerm: rightItem,
@@ -458,7 +465,6 @@ router.post("/circ", function (req, res) {
 
                             console.log(child, "child")
                             if (!child) {
-                                prove.children=[]
                                 prove.children.push({
                                     leftTerm: leftItem,
                                     rightTerm: rightItem,
@@ -478,9 +484,9 @@ router.post("/circ", function (req, res) {
             } else {
                 result = array[0].slice(0, 5);
                 if (result === "Error") {
-                    prove.children =[];
+                    prove.children = [];
                     prove.children.push({
-                        leftTerm: "Result " ,
+                        leftTerm: "Result: ",
                         rightTerm: array[0],
                         id: 1,
                         wasRun: true,
@@ -488,7 +494,7 @@ router.post("/circ", function (req, res) {
                         children: []
                     });
                 }
-                else{
+                else {
                     proveJson.leftTerm = "Error "
                     proveJson.rightTerm = array;
                     proveJson.id = 0;

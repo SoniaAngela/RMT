@@ -34,32 +34,27 @@ export class LoopComponent {
   showBan = false;
   specificEl: any;
   scriptFiles: Array<any>;
-  textareamodel:any;
+  textareamodel: any;
   sumEx: any;
   scrFiles: any;
   isShow: any;
+  showModel: any;
+  minError: any;
+  maxError: any;
+  systemError: any;
+  termError: any
   constructor(public dataService: DataService) {
     this.sumEx = "sum";
     this.getExamplesList(this.sumEx);
     this.isShow = 0;
-    this.textareamodel= this.getExample("search_default.rmt");
+    this.showModel = 0;
+    this.textareamodel = this.getExample("search_default.rmt");
+    this.minError=0;
+    this.maxError=0;
+    this.systemError=0;
+    this.termError=0
   }
 
-
-
-  // @ViewChild('tree') tree;
-  // @ViewChild('tree') treeComponent: TreeComponent;
-
-  // ngAfterViewInit() {
-  //   this.tree.treeModel.expandAll();
-  //   const treeModel:TreeModel = this.treeComponent.treeModel;
-  //   const firstNode:TreeNode = treeModel.getFirstRoot();
-
-  //   firstNode.setActiveAndVisible();
-  // }
-
-
-  //trebuie luate numele fisierelor din folder si afisate
   getExamplesList(exampleList) {
     this.dataService.getExamplesList(exampleList).subscribe(
       (data: any) => {
@@ -86,40 +81,53 @@ export class LoopComponent {
         console.log(err)
       });
   }
-  
+
   showFiles() {
     this.isShow = this.isShow == 0 ? 1 : 0;
   }
 
-  getParamFct(loopParam, textArea, t1, t2, t3, btn) {
-    let hasChildrenNo = 0;
-    this.dataService.getSearch(loopParam, textArea, t1, t2, t3, btn).subscribe(
-      (data: any) => {
-        if (data) {
-          this.loops = data;
-          this.nodes = Array(this.loops);
-        }
-      }, (err: any) => {
-        console.log(err)
-      });
+  showExecution() {
+    this.showModel = this.showModel == 0 ? 1 : 0;
   }
-  // getLoopSection(loopParam) {
-  //   this.dataService.getLoop(loopParam).subscribe(
-  //     (data: any) => {
-  //       if (data) {
-  //         this.loops = data;
-  //         console.log(this.loops)
+onSystemChange(){
+  this.systemError=0
+}
+onMinChange(){
+  this.minError=0
+}
+onMaxChange(){
+  this.maxError=0
+}
+onTermChange(){
+  this.termError=0
+}
+  getParamFct(loopParam, textArea, t1, t2, t3, btn) {
+    if (loopParam && t1 && t2 && t3) {
+      this.dataService.getSearch(loopParam, textArea, t1, t2, t3, btn).subscribe(
+        (data: any) => {
+          if (data) {
+            this.loops = data;
+            this.nodes = Array(this.loops);
+          }
+        }, (err: any) => {
+          console.log(err)
+        });
+    }else{
+      if(!loopParam){
+        this.termError=1
+      }
+      if(!t1){
+        this.minError=1
+      }
+      if(!t2){
+        this.maxError=1
+      }
+      if(!t3){
+        this.systemError=1
+      }
+    }
+  }
 
-  //         console.log("loops tree")
-  //         this.nodes = Array(this.loops);
-  //         console.log(Array(this.loops))
-  //         console.log(this.nodes)
-  //       }
-  //     }, (err: any) => {
-  //       console.log(err)
-  //     });
-
-  // }
   options: ITreeOptions = {
     actionMapping,
     isExpandedField: 'expanded',
